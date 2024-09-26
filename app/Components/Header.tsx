@@ -13,7 +13,7 @@ import { setStartDate,setEndDate,setGuests,setLocation } from '../Redux/Slices/G
 function Header() {
 
     const dispatch= useDispatch();
-    const { location, startDate, endDate, number } = useSelector((state: RootState) => state.guests);
+    const { startDate, endDate, number } = useSelector((state: RootState) => state.guests);
     const [searchValue, setSearchValue] = useState<string>("");
 
     const selectionRange = {
@@ -22,42 +22,41 @@ function Header() {
         key: 'selection',
     };
 
-    const handleSelect = (ranges:any) => {
+    const handleDate = (ranges:any) => {
         dispatch(setStartDate(ranges.selection.startDate));
         dispatch(setEndDate(ranges.selection.endDate));
     };
 
-   const handleGuestChange =(value:number)=>{
-            dispatch(setGuests(value))
-   }
+  
+  
     
 
     return (
         <header className="sticky top-0 z-50 p-5 md:px-10 grid grid-cols-3 bg-white shadow-md">
             <Link href={"/"}>
-                <Image 
-                    src="https://links.papareact.com/qd3" 
-                    loading="lazy" 
-                    alt="Logo" 
-                    width={150} 
-                    height={70} 
-                    style={{ objectFit: 'contain' }} 
+                <Image
+                    src="https://links.papareact.com/qd3"
+                    loading="lazy"
+                    alt="Logo"
+                    width={150}
+                    height={70}
+                    style={{ objectFit: 'contain' }}
                 />
             </Link>
 
             <div className="flex items-center md:border-2 rounded-full md:shadow-sm py-2">
-                <input 
-                    className="pl-4 bg-transparent outline-none flex-grow text-sm text-gray-400" 
+                <input
+                    className="pl-4 bg-transparent outline-none flex-grow text-sm text-gray-400"
                     value={searchValue}
-                    onChange={(e) => setSearchValue(e.target.value)}
-                    type="text" 
-                    placeholder="Start Your Search" 
+                    onChange={(e) => dispatch(setLocation(e.target.value))}
+                    type="text"
+                    placeholder="Start Your Search"
                 />
-                <FontAwesomeIcon 
-                    icon={faSearch} 
-                    height={40} 
-                    width={40} 
-                    className="hidden md:inline-flex text-center bg-red-400 text-white rounded-full p-3 cursor-pointer mx-2" 
+                <FontAwesomeIcon
+                    icon={faSearch}
+                    height={40}
+                    width={40}
+                    className="hidden md:inline-flex text-center bg-red-400 text-white rounded-full p-3 cursor-pointer mx-2"
                 />
             </div>
 
@@ -76,31 +75,31 @@ function Header() {
                         ranges={[selectionRange]}
                         minDate={new Date()}
                         rangeColors={["#fd5b61"]}
-                        onChange={handleSelect}
+                        onChange={handleDate}
                     />
                     <div className="flex justify-between items-center border-b-2 mb-3">
                         <h2 className="text-2xl p-2 font-semibold">Number of guests</h2>
                         <div>
-                        <FontAwesomeIcon icon={faUser} className="h-5" />
-                        <input 
-                            type="number" 
-                            className="w-12 pl-2 text-lg outline-none text-red-400"
-                            value={number}
-                            onChange={(e) => handleGuestChange(parseInt(e.target.value))} 
-                            min={1}
-                        />
+                            <FontAwesomeIcon icon={faUser} className="h-5" />
+                            <input
+                                type="number"
+                                className="w-12 pl-2 text-lg outline-none text-red-400"
+                                value={number}
+                                onChange={(e) => dispatch(setGuests(parseInt(e.target.value)) )}
+                                min={1}
+                            />
                         </div>
                     </div>
 
                     <div className='flex'>
-                    <button className='flex-grow text-gray-500' onClick={() => setSearchValue("")}>
-                    Cancel
-                </button>
-                    <button>
-                    <Link href={"/Search"} className='flex-grow text-red-400'>
-                    Search
-                    </Link>
-                    </button>
+                        <button className='flex-grow text-gray-500' onClick={() => setSearchValue("")}>
+                            Cancel
+                        </button>
+                        <button>
+                            <Link href={"/Search"} className='flex-grow text-red-400'>
+                                Search
+                            </Link>
+                        </button>
                     </div>
                 </div>
             )}
