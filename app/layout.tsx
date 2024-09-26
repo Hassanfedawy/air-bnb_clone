@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import Header from '../app/Components/Header'
+import Header from '../app/Components/Header';
 import Footer from "./Components/Footer";
-
+import Wrapper from "./Components/Wrapper"; // Import the new Wrapper
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -23,17 +23,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <Header/>
-        {children}
-        <Footer/>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <Wrapper>
+          <Header />
+          {children}
+          <Footer />
+        </Wrapper>
       </body>
     </html>
   );

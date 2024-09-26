@@ -7,12 +7,14 @@ import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { DateRangePicker } from 'react-date-range';
 import Link from 'next/link';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../Redux/Store';
+import { setStartDate,setEndDate,setGuests,setLocation } from '../Redux/Slices/Guests';
 function Header() {
+
+    const dispatch= useDispatch();
+    const { location, startDate, endDate, number } = useSelector((state: RootState) => state.guests);
     const [searchValue, setSearchValue] = useState<string>("");
-    const [startDate, setStartDate] = useState<Date>(new Date());
-    const [endDate, setEndDate] = useState<Date>(new Date());
-    const [guests, setGuests] = useState<number>(1);
 
     const selectionRange = {
         startDate: startDate,
@@ -20,10 +22,15 @@ function Header() {
         key: 'selection',
     };
 
-    const handleSelect = (ranges: any) => {
-        setStartDate(ranges.selection.startDate);
-        setEndDate(ranges.selection.endDate); 
+    const handleSelect = (ranges:any) => {
+        dispatch(setStartDate(ranges.selection.startDate));
+        dispatch(setEndDate(ranges.selection.endDate));
     };
+
+   const handleGuestChange =(value:number)=>{
+            dispatch(setGuests(value))
+   }
+    
 
     return (
         <header className="sticky top-0 z-50 p-5 md:px-10 grid grid-cols-3 bg-white shadow-md">
@@ -78,8 +85,8 @@ function Header() {
                         <input 
                             type="number" 
                             className="w-12 pl-2 text-lg outline-none text-red-400"
-                            value={guests}
-                            onChange={(e) => setGuests(parseInt(e.target.value))} 
+                            value={number}
+                            onChange={(e) => handleGuestChange(parseInt(e.target.value))} 
                             min={1}
                         />
                         </div>
