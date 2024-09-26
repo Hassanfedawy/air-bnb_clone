@@ -1,3 +1,4 @@
+"use client"
 import { useSelector } from "react-redux"
 import { RootState } from "../Redux/Store"
 import { format } from 'date-fns';
