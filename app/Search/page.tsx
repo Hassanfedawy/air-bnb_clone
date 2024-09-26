@@ -17,7 +17,7 @@ function Page() {
         <section className='pt-14 px-6'>
           <p className='text-xs'>300+ Stays for 5 guests</p>
 
-          <h1 className='text-3xl font-semibold mt-2 mb-6'>Stays in london {formatedStartDate}--{formatedEndDate}</h1>
+          <h1 className='text-3xl font-semibold mt-2 mb-6'>Stays in london {formatedStartDate} to{formatedEndDate}</h1>
 
           <div className='hidden lg:flex  mb-5 space-x-3 whitespace-nowrap text-gray-800'>
             <p className='tags'>Cancellation Flexabilty</p>
