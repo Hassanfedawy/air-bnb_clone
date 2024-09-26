@@ -13,7 +13,7 @@ import { setStartDate,setEndDate,setGuests,setLocation } from '../Redux/Slices/G
 function Header() {
 
     const dispatch= useDispatch();
-    const { startDate, endDate, number } = useSelector((state: RootState) => state.guests);
+    const {location, startDate, endDate, number } = useSelector((state: RootState) => state.guests);
     const [searchValue, setSearchValue] = useState<string>("");
 
     const selectionRange = {
@@ -47,7 +47,6 @@ function Header() {
             <div className="flex items-center md:border-2 rounded-full md:shadow-sm py-2">
                 <input
                     className="pl-4 bg-transparent outline-none flex-grow text-sm text-gray-400"
-                    value={searchValue}
                     onChange={(e) => dispatch(setLocation(e.target.value))}
                     type="text"
                     placeholder="Start Your Search"
@@ -69,7 +68,7 @@ function Header() {
                 </div>
             </div>
 
-            {searchValue && (
+            {location && (
                 <div className="col-span-3 mx-auto">
                     <DateRangePicker
                         ranges={[selectionRange]}
