@@ -4,7 +4,6 @@ import mediumCardData from'./mediumcard.json'
 import SmallCard from "./Components/SmallCard";
 import MediumCard from "./Components/MediumCard";
 import LargeCard from "./Components/LargeCard";
-import Footer from "./Components/Footer";
 export default function Home() {
 
 
@@ -39,7 +38,7 @@ export default function Home() {
                     ButtonText="Get Inspired"/>
 
 
-                    <Footer/>
+                    
     </main>
    </>
 
