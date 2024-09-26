@@ -8,8 +8,8 @@ function Page() {
 
   const {startDate,endDate}= useSelector((state:RootState)=>state.guests)
 
-  const formatedStartDate=format(startDate,"dd-mmmm-yyyy")
-  const formatedEndDate=format(endDate,"dd-mmmm-yyyy")
+  const formatedStartDate=format(startDate,"dd-mm-yyyy")
+  const formatedEndDate=format(endDate,"dd-mm-yyyy")
 
   return (
     <div>
