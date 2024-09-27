@@ -99,7 +99,7 @@ function Header() {
                         <button className='flex-grow text-gray-500' onClick={() => dispatch(setSearchValue(""))}>
                             Cancel
                         </button>
-                        <button onClick={()=>dispatch(setSearchValue("")} >
+                        <button onClick={()=>dispatch(setSearchValue(""))} >
                             <Link href={"/Search"} className='flex-grow text-red-400'>
                                 Search
                             </Link>
