@@ -2,6 +2,7 @@
 import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faGlobe, faBars, faUser } from '@fortawesome/free-solid-svg-icons';
+import { format } from 'date-fns';
 import { useState } from 'react';
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
@@ -9,12 +10,13 @@ import { DateRangePicker } from 'react-date-range';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../Redux/Store';
-import { setStartDate,setEndDate,setGuests,setLocation } from '../Redux/Slices/Guests';
+import { setStartDate,setEndDate,setGuests,setLocation,setSearchValue } from '../Redux/Slices/Guests';
 function Header() {
 
     const dispatch= useDispatch();
-    const {location, startDate, endDate, number } = useSelector((state: RootState) => state.guests);
-    const [searchValue, setSearchValue] = useState<string>("");
+    const {location, startDate, endDate, number,searchValue } = useSelector((state: RootState) => state.guests);
+    const formatedStartDate=format(startDate,"dd-mm-yyyy")
+    const formatedEndDate=format(endDate,"dd-mm-yyyy")
 
     const selectionRange = {
         startDate: startDate,
@@ -22,15 +24,18 @@ function Header() {
         key: 'selection',
     };
 
-    const handleDate = (ranges:any) => {
+    const handleDateChange = (ranges:any) => {
         dispatch(setStartDate(ranges.selection.startDate));
         dispatch(setEndDate(ranges.selection.endDate));
     };
 
-  
-  
-    
+    const handleSearchChange=(e:any)=>{
+        dispatch(setLocation(e.target.value))
+        dispatch(setSearchValue(location))
+    }     /*  IMPORTANT */
+   
 
+  
     return (
         <header className="sticky top-0 z-50 p-5 md:px-10 grid grid-cols-3 bg-white shadow-md">
             <Link href={"/"}>
@@ -47,9 +52,9 @@ function Header() {
             <div className="flex items-center md:border-2 rounded-full md:shadow-sm py-2">
                 <input
                     className="pl-4 bg-transparent outline-none flex-grow text-sm text-gray-400"
-                    onChange={(e) => dispatch(setLocation(e.target.value))}
+                    onChange={(e)=>handleSearchChange(e)}
                     type="text"
-                    placeholder="Start Your Search"
+                    placeholder={`${location} from ${formatedStartDate} to ${formatedEndDate}` ||"Start Your Search"}
                 />
                 <FontAwesomeIcon
                     icon={faSearch}
@@ -68,13 +73,13 @@ function Header() {
                 </div>
             </div>
 
-            {location && (
+            {searchValue && (
                 <div className="col-span-3 mx-auto">
                     <DateRangePicker
                         ranges={[selectionRange]}
                         minDate={new Date()}
                         rangeColors={["#fd5b61"]}
-                        onChange={handleDate}
+                        onChange={handleDateChange}
                     />
                     <div className="flex justify-between items-center border-b-2 mb-3">
                         <h2 className="text-2xl p-2 font-semibold">Number of guests</h2>
@@ -90,11 +95,11 @@ function Header() {
                         </div>
                     </div>
 
-                    <div className='flex'>
-                        <button className='flex-grow text-gray-500' onClick={() => setSearchValue("")}>
+                    <div className='flex justify-around'>
+                        <button className='flex-grow text-gray-500' onClick={() => dispatch(setSearchValue(""))}>
                             Cancel
                         </button>
-                        <button>
+                        <button onClick={()=>dispatch(setSearchValue("")} >
                             <Link href={"/Search"} className='flex-grow text-red-400'>
                                 Search
                             </Link>

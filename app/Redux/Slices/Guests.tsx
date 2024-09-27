@@ -6,6 +6,7 @@ interface guestsState {
     startDate: Date;
     endDate: Date;
     number: number;
+    searchValue:string;
 }
 
 const initialState: guestsState = {
@@ -13,6 +14,7 @@ const initialState: guestsState = {
     startDate: new Date(),
     endDate: new Date(),
     number: 1,
+    searchValue:""
 };
 
 const guestSlice = createSlice({
@@ -31,8 +33,11 @@ const guestSlice = createSlice({
         setGuests: (state, action: PayloadAction<number>) => {
             state.number = action.payload;
         },
+        setSearchValue: (state, action: PayloadAction<string>) => {
+            state.searchValue = action.payload;
+        },
     },
 });
 
-export const { setLocation, setStartDate, setEndDate, setGuests } = guestSlice.actions;
+export const { setLocation, setStartDate, setEndDate, setGuests,setSearchValue } = guestSlice.actions;
 export default guestSlice.reducer;
