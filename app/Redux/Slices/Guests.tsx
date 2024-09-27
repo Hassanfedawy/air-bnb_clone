@@ -7,6 +7,8 @@ interface guestsState {
     endDate: Date;
     number: number;
     searchValue:string;
+    apartments: [],  // Add this line
+
 }
 
 const initialState: guestsState = {
@@ -14,7 +16,9 @@ const initialState: guestsState = {
     startDate: new Date(),
     endDate: new Date(),
     number: 1,
-    searchValue:""
+    searchValue:"",
+    apartments: [],  // Add this line
+
 };
 
 const guestSlice = createSlice({
@@ -33,11 +37,11 @@ const guestSlice = createSlice({
         setGuests: (state, action: PayloadAction<number>) => {
             state.number = action.payload;
         },
-        setSearchValue: (state, action: PayloadAction<string>) => {
-            state.searchValue = action.payload;
-        },
+        setApartments: (state, action) => {
+            state.apartments = action.payload; // Handle setting apartments
+        }
     },
 });
 
-export const { setLocation, setStartDate, setEndDate, setGuests,setSearchValue } = guestSlice.actions;
+export const { setLocation, setStartDate, setEndDate, setGuests,setApartments } = guestSlice.actions;
 export default guestSlice.reducer;

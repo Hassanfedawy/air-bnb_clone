@@ -3,20 +3,26 @@ import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faGlobe, faBars, faUser } from '@fortawesome/free-solid-svg-icons';
 import { format } from 'date-fns';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { DateRangePicker } from 'react-date-range';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../Redux/Store';
-import { setStartDate,setEndDate,setGuests,setLocation,setSearchValue } from '../Redux/Slices/Guests';
+import { setStartDate,setEndDate,setGuests,setLocation } from '../Redux/Slices/Guests';
 function Header() {
 
     const dispatch= useDispatch();
-    const {location, startDate, endDate, number,searchValue } = useSelector((state: RootState) => state.guests);
-    const formatedStartDate=format(startDate,"dd-mm-yyyy")
-    const formatedEndDate=format(endDate,"dd-mm-yyyy")
+    const {location, startDate, endDate, number } = useSelector((state: RootState) => state.guests);
+    const formatedStartDate=format(startDate,"dd-mmmm-yyyy")
+    const formatedEndDate=format(endDate,"dd-mmmm-yyyy")
+    const [searchValue,setSearchValue]=useState("")
+
+    useEffect(()=>{
+
+        setSearchValue(location)
+    },[location])
 
     const selectionRange = {
         startDate: startDate,
@@ -29,11 +35,7 @@ function Header() {
         dispatch(setEndDate(ranges.selection.endDate));
     };
 
-    const handleSearchChange=(e:any)=>{
-        dispatch(setLocation(e.target.value))
-        dispatch(setSearchValue(location))
-    }     /*  IMPORTANT */
-   
+
 
   
     return (
@@ -52,9 +54,10 @@ function Header() {
             <div className="flex items-center md:border-2 rounded-full md:shadow-sm py-2">
                 <input
                     className="pl-4 bg-transparent outline-none flex-grow text-sm text-gray-400"
-                    onChange={(e)=>handleSearchChange(e)}
+                    onChange={(e)=> dispatch(setLocation(e.target.value))}
+                    value={searchValue}
                     type="text"
-                    placeholder={`${location} from ${formatedStartDate} to ${formatedEndDate}` ||"Start Your Search"}
+                    placeholder={`${formatedStartDate} ${formatedEndDate}` ||"Start Your Search"}
                 />
                 <FontAwesomeIcon
                     icon={faSearch}
@@ -96,10 +99,10 @@ function Header() {
                     </div>
 
                     <div className='flex justify-around'>
-                        <button className='flex-grow text-gray-500' onClick={() => dispatch(setSearchValue(""))}>
+                        <button className=' text-gray-500'onClick={()=>{setSearchValue("")}} >
                             Cancel
                         </button>
-                        <button onClick={()=>dispatch(setSearchValue(""))} >
+                        <button onClick={()=>setSearchValue("")} >
                             <Link href={"/Search"} className='flex-grow text-red-400'>
                                 Search
                             </Link>

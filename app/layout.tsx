@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import Header from './Components/Header'
 import "./globals.css";
-import Header from '../app/Components/Header';
 import Footer from "./Components/Footer";
 import Wrapper from "./Components/Wrapper"; // Import the new Wrapper
 
@@ -30,7 +30,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Wrapper>
-          <Header />
+        <Header />
           {children}
           <Footer />
         </Wrapper>
