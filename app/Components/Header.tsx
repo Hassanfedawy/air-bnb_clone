@@ -51,13 +51,13 @@ function Header() {
                 />
             </Link>
 
-            <div className="flex items-center md:border-2 rounded-full md:shadow-sm py-2">
+            <div className="flex items-center border md:border-2 rounded-full md:shadow-sm py-2">
                 <input
                     className="pl-4 bg-transparent outline-none flex-grow text-sm text-gray-400"
                     onChange={(e)=> dispatch(setLocation(e.target.value))}
                     value={searchValue}
                     type="text"
-                    placeholder={`${formatedStartDate} ${formatedEndDate}` ||"Start Your Search"}
+                    placeholder="Start Your Search"
                 />
                 <FontAwesomeIcon
                     icon={faSearch}

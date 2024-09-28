@@ -5,6 +5,8 @@ import apartments from '../Data/apartments.json'
 import Apartments from '../Components/apartments';
 function Page() {
   const { location } = useSelector((state: RootState) => state.guests);
+  const { number } = useSelector((state: RootState) => state.guests);
+
 
 
  
@@ -13,7 +15,7 @@ function Page() {
     <div>
       <main className='flex'>
         <section className='pt-14 px-6'>
-          <p className='text-xs'>300+ Stays for 5 guests</p>
+          <p className='text-xs'>{apartments.length} Stays for {number} guests</p>
 
           <h1 className='text-3xl font-semibold mt-2 mb-6'>Stays in {location}</h1>
 
